@@ -38,8 +38,8 @@ if (Environment.GetEnvironmentVariable("GUFOFAQ_INSECURE_TLS") == "1")
 
 using var client = new HttpClient(handler) { Timeout = TimeSpan.FromMinutes(5) };
 client.DefaultRequestHeaders.Add("X-API-Key", apiKey);
-// 錯誤訊息的語言（值域 zh-TW / en）。不帶就用租戶自己的設定。
-client.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue("zh-TW"));
+// 服務端訊息的語言由**租戶在產品介面設定的介面語言**決定（zh-TW／en）；
+// 送 `Accept-Language` 不會改變它——所以錯誤分流一律看狀態碼與 code，不要比對句子。
 
 var command = args.Length > 0 ? args[0] : "all";
 

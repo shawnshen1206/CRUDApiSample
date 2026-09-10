@@ -63,8 +63,9 @@ JSON 字串。
 { "detail": { "code": "bad_mapping", "detail": "對照不是合法的 JSON：…" } }  // 帶機器可判的代碼
 ```
 
-**請用 HTTP 狀態碼 ＋ `detail.code` 分流，不要比對句子**——句子會隨租戶語言變（`Accept-Language`
-可選 `zh-TW`／`en`）。
+**請用 HTTP 狀態碼 ＋ `detail.code` 分流，不要比對句子。** 句子的語言由**租戶在產品介面設定的
+介面語言**決定（`zh-TW`／`en`），呼叫端送 `Accept-Language` 不會改變它——同一個租戶把介面語言
+換成英文，你的字串比對就整批失效。
 
 回應標頭一律帶 `X-Correlation-ID`；跨服務故障（`502`／`503`）的訊息裡也會有同一個編號，
 回報問題時附上它。
